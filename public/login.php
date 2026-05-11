@@ -1,3 +1,10 @@
+<?php
+    // if user loggedIn redirect 
+    if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] == true) {
+        header("Location: /public/inhaltsverzeichniss.php");
+    }
+?>
+
 <html>
 
 <head>
@@ -6,6 +13,9 @@
 </head>
 
 <body>
+
+
+
     <h1>LOGIN</h1>
     <div class="container">
         <form id="login" method="POST" action="/bin/login.php">

@@ -6,6 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit;
 }
 
+// TODO: chek login and if redirect to inh.html
+
+session_start();
+
 $email = $_POST["email"] ?? null;
 $passwort = $_POST["passwort"] ?? null;
 
@@ -19,12 +23,15 @@ $rightPasswort = "123";
 
 if ($email == $rightEmail && $passwort == $rightPasswort) {
 
+    $_SESSION["loggedIn"] = true;
+    $_SESSION["email"] = $email;
+
     header("Location: /public/inhaltsverzeichniss.html");
     exit;
 
 } else {
-
     // Login falsch
+     $_SESSION["loggedIn"] = false;
     header("Location: /public/login.php");
     exit;
 }

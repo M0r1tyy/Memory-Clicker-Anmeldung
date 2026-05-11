@@ -1,3 +1,10 @@
+ <?php
+ if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] == true) {
+        header("Location: /public/loginphp");
+    }
+?>
+
+
 <html>
 <head>
 <style>
@@ -49,7 +56,7 @@
 </head>
 
 <body>
-
+<a href="login.php" class="top-btn"> Logout </a>
 <div class="container">
     <div class="header"> <h1> - Spiele - </h1></div>
     <div class="main">Hauptspiel</div>
