@@ -1,0 +1,44 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "main main"
+        "undermain undermain"
+        "footer footer";
+    background-color: black;
+    gap: 1px;
+    font-size: xx-large;
+
+}
+
+.container div {
+    background-color: white;
+
+}
+
+.header {
+    grid-area: header;
+    text-align: center;
+    font-size: large;
+}
+
+.main {
+    grid-area: main;
+    text-align: center;
+    height: 25vh;
+}
+
+.undermain {
+    display: grid;
+    grid-area: undermain;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    height: 25vh;
+}
+
+.footer {
+    grid-area: footer;
+    text-align: center;
+    height: 10vh;
+}

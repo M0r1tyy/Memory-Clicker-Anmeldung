@@ -1,14 +1,21 @@
 <?php
-    // if user loggedIn redirect 
-    if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] == true) {
-        header("Location: /public/inhaltsverzeichniss.php");
-    }
+$lifetime = 60;
+session_set_cookie_params($lifetime);
+session_start();
+
+// if user loggedIn redirect 
+if (
+    isset($_SESSION["loggedIn"])
+    && $_SESSION["loggedIn"] == true
+) {
+    header("Location: /public/inhaltsverzeichniss.php");
+}
 ?>
 
 <html>
 
 <head>
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/styleLogin.css">
     <title>Hager games</title>
 </head>
 

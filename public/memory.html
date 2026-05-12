@@ -1,0 +1,28 @@
+<html>
+    <head>
+    <link rel="stylesheet" href="http://localhost:8000/style/memory.css">
+
+</head>
+<body>
+
+<h1>Memory Spiel</h1>
+<p>Wähle die Anzahl der Karten aus</p>
+<p>Versuche: <span id="attempts">0</span></p>
+<p id="winCount">Siege: 0</p>
+
+
+<select id="sizeSelect">
+    <option value="2">2 Karten</option>
+    <option value="8">8 Karten</option>
+    <option value="18">18 Karten</option>
+    <option value="32">32 Karten</option>
+    <option value="50">50 Karten</option>
+    <option value="72">72 Karten</option>
+    <option value="98">98 Karten</option>
+</select>
+<br><br>
+<div id="board"></div>
+
+<script src="http://localhost:8000/js/memory.js"></script>
+</body>
+</html>

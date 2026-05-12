@@ -1,0 +1,33 @@
+#board {
+    display: grid;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    background: rgb(55, 47, 47);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    transition: transform 0.02s ease;
+}
+
+.flipped {
+    background: white;
+    border: 0.1px solid black;
+}
+
+.matched {
+    background: lightgreen;
+    border: 0px solid black;
+}
+
+.card:hover { 
+    border-color: green;
+    transform: scale(1.075);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.526);
+}

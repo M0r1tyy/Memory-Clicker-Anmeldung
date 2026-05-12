@@ -1,4 +1,7 @@
 <?php
+session_start();
+
+
 
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
@@ -6,9 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit;
 }
 
-// TODO: chek login and if redirect to inh.html
 
-session_start();
+
+// TODO: chek login and if redirect to inh.html
+if (
+    isset($_SESSION["loggedIn"])
+    && $_SESSION["loggedIn"] == true
+) {
+    header("Location: /public/inhaltsverzeichniss.php");
+}
 
 $email = $_POST["email"] ?? null;
 $passwort = $_POST["passwort"] ?? null;
@@ -26,12 +35,12 @@ if ($email == $rightEmail && $passwort == $rightPasswort) {
     $_SESSION["loggedIn"] = true;
     $_SESSION["email"] = $email;
 
-    header("Location: /public/inhaltsverzeichniss.html");
+    header("Location: /public/inhaltsverzeichniss.php");
     exit;
 
 } else {
     // Login falsch
-     $_SESSION["loggedIn"] = false;
+    $_SESSION["loggedIn"] = false;
     header("Location: /public/login.php");
     exit;
 }

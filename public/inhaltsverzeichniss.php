@@ -1,67 +1,27 @@
  <?php
- if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] == true) {
-        header("Location: /public/loginphp");
+ session_start();
+
+ if (
+    isset($_SESSION["loggedIn"]) == false
+    || $_SESSION["loggedIn"] != true
+    ) {
+        header("Location: /public/login.php");
     }
 ?>
 
-
 <html>
 <head>
-<style>
-.container {
-    display: grid;
-    grid-template-areas:
-        "header header"
-        "main main"
-        "undermain undermain"
-        "footer footer";
-    background-color: black;
-    gap: 1px;
-    font-size: xx-large;
+    <link rel="stylesheet" href="/style/styleInhaltsverzeichniss.css">
 
-}
-
-.container div {
-    background-color: white;
-
-}
-
-.header {
-    grid-area: header;
-    text-align: center;
-    font-size: large;
-}
-
-.main {
-    grid-area: main;
-    text-align: center;
-    height: 25vh;
-}
-
-.undermain {
-    display: grid;
-    grid-area: undermain;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-    height: 25vh;
-}
-
-.footer {
-    grid-area: footer;
-    text-align: center;
-    height: 10vh;
-}
-</style>
 </head>
 
 <body>
-<a href="login.php" class="top-btn"> Logout </a>
+<a href="/bin/logout.php" class="top-btn"> Logout </a>
 <div class="container">
     <div class="header"> <h1> - Spiele - </h1></div>
     <div class="main">Hauptspiel</div>
     <div class="undermain">
-        <div> Spiel 1 </div>
+        <div> <a href="http://localhost:8000/public/memory.html">Memory</a> </div>
         <div> Spiel 2 </div>
     </div>
 
