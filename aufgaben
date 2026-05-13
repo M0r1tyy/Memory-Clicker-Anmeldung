@@ -1,0 +1,107 @@
+Tag 6
+logout mit 2ter Datei <-- FERTIG
+inhaltsverzeichniss.php => style in style file <-- FERTIG
+bei slack session ansehen <-- FERTIG
+Ziel: 
+time to live (1min) <-- FERTIG
+memory planen 
+- Welche Datein 
+    html für Struktur 
+    css für Aussehen 
+    js für game Logik 
+    php für server 
+- Welche Routen Links
+    alle Datein in html einsetzen
+    Datei mit Statistik Datei verbinden
+- Ablauf
+    Überschrift 
+    Style setzen
+        Board
+        card
+        card.flipped
+        card.matched
+    Karten definieren (array)
+    Board erstellen
+    First und Secondcard setzen (null)
+    Board locked setzen
+        - globale variable
+    foreach card ein div
+        - wie karten ansprechen (ids)
+    addEventListner(click)
+    vergleich first und secondcard
+    wenn gleich dann matched
+        Karte bleibt da und aufgedeckt
+    wenn ungleich dann flipped zurücksetzen
+    Board Reset function
+        First und Secondcard setzen (null)
+        Board locked auf false
+    
+    Am ende! trotzdem überlegen wo du die abgreifst
+    Statistik
+        gespielte Spiele
+        gespielte Zeit
+        
+        
+        speichern spielablauf
+        [zug_x => [zugData: was der speiler gemacht hat]]
+        züge
+        gewonnen Spiele
+        winning streak
+
+
+
+# card as a class
+class <NameDerKlasse> {
+  # klassem stamdard ,methoden
+  #TODO: constructor in klassen anschauen 
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+
+  let emoji = ""
+  let flipped = false
+  let matched = false
+  let back =""
+}
+
+const square = new <NameDerKlasse>(10, 10);
+
+[square1, square2]
+[['emoji' => "", "flipped" => false], square2]
+
+let test = square2.emoji
+---
+[
+    'turn1' : [card1, card2, matched],
+    'turn2' : [card1, card2, matched],
+]
+
+Script mit absoluten Pfaden                                  <-- FERTIG
+Login + verbinden                                            <-- FERTIG
+Use full screen width for board oder Board zentrieren        <-- FERTIG
+Bitte hintergrund setzen
+Array mit zugabfolge für game erstellen
+cards array pick them at random ohne wiederholung            <-- FERTIG
+doppelclick problem => ab dem click event listener deaktivieren und dann wieder aktivieren <-- FERTIG
+matched card sollten nicht klickbar sein                    <-- FERTIG
+when fail: lock clicks for .8 second                        <-- FERTIG
+kein leeres board bei start (default size) oder auswahl in der mitte <-- FERTIG
+Bilder auf feldgröße bringen                                  <-- FERTIG
+card:hover: etwas größer DAMIT ICH SEHE Wo die maus ist       <-- FERTIG
+bisschen schatten auf die karten                              <-- FERTIG
+
+mismatch rot anzeigen                                         <-- FERTIG
+
+12.05:
+karten mit vorderseite bitte mit border                       <-- FERTIG
+bisschen schatten auf die karten                              <-- FERTIG
+check for win and simple <dialog> window mit button zum neustarten  <-- FERTIG
+
+13.05.2026
+Für Homeoffice:
+- turn array zum auswerten erstellen
+- 2 Spieler => wichtig 
+- Planen Statistik am ende erfassem
+- globals groß schreiben
+- 

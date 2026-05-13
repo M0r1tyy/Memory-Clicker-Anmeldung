@@ -13,9 +13,9 @@ let secondCard = null;
 let boardLocked = false;
 let attempts = 0;
 let winCount = 0;
-var SIZE = 8;
+var SIZE = 2;
 
-shuffle(cards);
+
 buildBoard(SIZE);
 
 
@@ -48,8 +48,11 @@ function buildBoard(size) {
 
     let pairs = size / 2;
 
+    // choose random symbol
+    shuffle(cards);
     const gameSize = cards.slice(0, pairs);
 
+    // choose board order
     const gameCards = [...gameSize, ...gameSize];
     shuffle(gameCards);
 
@@ -70,6 +73,7 @@ function buildBoard(size) {
 // !hasTwoCards
 // if(!flipCard())
 
+//Hauptfunktion
 function onCardClick(event) {
     let targetCard = event.currentTarget;
 
@@ -84,7 +88,6 @@ function onCardClick(event) {
     if (!checkWin()) {
         return;
     }
-    resetALL();
 }
 
 
@@ -173,16 +176,12 @@ function checkWin() {
     // select all not matched 
     if (document.querySelectorAll(".card:not(.matched)").length === 0) {
 
-        const dialog = document.getElementById("winDialog");
+        const winDialog = document.getElementById("winDialog");
 
-        dialog.showModal();
+        winDialog.showModal();
 
         winCount++;
         document.getElementById("winCount").textContent = "Siege: " + winCount;
-
-        document.getElementById("closeDialog").addEventListener("click", () => {
-            document.getElementById("winDialog").close();
-        })
 
         return true;
     }
@@ -193,8 +192,11 @@ function resetALL() {
     firstCard = null;
     secondCard = null;
     boardLocked = false;
-    shuffle(cards);
     buildBoard(SIZE);
-    
+}
+
+function onDialogCloseBtn(tag) {
+    document.getElementById('winDialog').close();
+    resetALL();
 }
 

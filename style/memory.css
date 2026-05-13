@@ -45,6 +45,9 @@
     75% { transform: translateX(-5px); }
     100% { transform: translateX(0); }
 }
+dialog {
+    border: none;
+}
 
 dialog::backdrop {
     background: rgba(0, 0, 0, 0.583);
