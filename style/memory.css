@@ -5,6 +5,7 @@
 }
 
 .card {
+    font-size: 40px;
     width: 100px;
     height: 100px;
     background: rgb(55, 47, 47);
@@ -24,10 +25,27 @@
 .matched {
     background: lightgreen;
     border: 0px solid black;
+    pointer-events: none;
 }
 
 .card:hover { 
     border-color: green;
     transform: scale(1.075);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.526);
+}
+.mismatch {
+    animation: shake 0.5s;
+    background-color: #f54343;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.583);
 }

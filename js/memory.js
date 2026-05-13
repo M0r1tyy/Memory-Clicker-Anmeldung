@@ -13,7 +13,10 @@ let secondCard = null;
 let boardLocked = false;
 let attempts = 0;
 let winCount = 0;
-var SIZE = 2;
+var SIZE = 8;
+
+shuffle(cards);
+buildBoard(SIZE);
 
 
 function selectSize(event) {
@@ -128,7 +131,13 @@ function checkMatch() {
     } else {
         boardLocked = true;
 
+        firstCard.classList.add("mismatch");
+        secondCard.classList.add("mismatch");
+
         setTimeout(() => {
+            firstCard.classList.remove("mismatch");
+            secondCard.classList.remove("mismatch");
+
             firstCard.classList.remove("flipped");
             secondCard.classList.remove("flipped");
 
@@ -164,10 +173,17 @@ function checkWin() {
     // select all not matched 
     if (document.querySelectorAll(".card:not(.matched)").length === 0) {
 
-        alert("Gewonnen!");
-        console.log("test");
+        const dialog = document.getElementById("winDialog");
+
+        dialog.showModal();
+
         winCount++;
         document.getElementById("winCount").textContent = "Siege: " + winCount;
+
+        document.getElementById("closeDialog").addEventListener("click", () => {
+            document.getElementById("winDialog").close();
+        })
+
         return true;
     }
 }
@@ -177,6 +193,8 @@ function resetALL() {
     firstCard = null;
     secondCard = null;
     boardLocked = false;
+    shuffle(cards);
     buildBoard(SIZE);
+    
 }
 
