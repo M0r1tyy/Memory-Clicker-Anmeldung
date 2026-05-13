@@ -13,13 +13,14 @@ let secondCard = null;
 let boardLocked = false;
 let attempts = 0;
 let winCount = 0;
+var SIZE = 2;
 
 
-document.getElementById("sizeSelect").addEventListener("change", function () {
-    const size = parseInt(this.value);
-    buildBoard(size);
-})
+function selectSize(event) {
 
+    SIZE = event.currentTarget.value;
+    buildBoard(SIZE);
+}
 
 function buildBoard(size) {
 
@@ -56,38 +57,62 @@ function buildBoard(size) {
 
         card.dataset.symbol = symbol;
 
-        card.addEventListener("click", flipCard);
+        card.addEventListener("click", onCardClick);
 
         board.appendChild(card);
     });
 }
 
-// trigger on cardclick
-function flipCard() {
+// hasTwoCards != true
+// !hasTwoCards
+// if(!flipCard())
 
+function onCardClick(event) {
+    let targetCard = event.currentTarget;
 
-    if (this.classList.contains("flipped")) {
+    if (!flipCard(targetCard)) {
         return;
     }
 
-    if (boardLocked) return;
+    let hasMatch = checkMatch();
+    if (!hasMatch) {
+        return;
+    }
+    if (!checkWin()) {
+        return;
+    }
+    resetALL();
+}
 
-    if (this === firstCard) return;
 
-    this.classList.add("flipped");
-    this.textContent = this.dataset.symbol;
+
+
+// trigger on cardclick
+function flipCard(targetCard) {
+
+
+    if (targetCard.classList.contains("flipped")) {
+
+        return false;
+    }
+
+    if (boardLocked) return false;
+
+    if (targetCard === firstCard) return false;
+
+    targetCard.classList.add("flipped");
+    targetCard.textContent = targetCard.dataset.symbol;
 
     if (!firstCard) {
-        firstCard = this;
-        return;
+        firstCard = targetCard;
+        return false;
     }
 
-    secondCard = this;
+    secondCard = targetCard;
 
     attempts++;
     document.getElementById("attempts").textContent = attempts;
-
-    checkMatch();
+    return true;
 }
 
 function checkMatch() {
@@ -96,10 +121,10 @@ function checkMatch() {
         firstCard.classList.add("matched");
         secondCard.classList.add("matched");
         console.log("add class");
-                    console.log(secondCard.classList);
+        console.log(secondCard.classList);
 
-        // resetBoard();
-        checkWin();
+        resetBoard();
+        return true;
     } else {
         boardLocked = true;
 
@@ -112,7 +137,9 @@ function checkMatch() {
             secondCard.textContent = "";
 
             resetBoard();
+
         }, 800);
+        return false;
     }
 }
 
@@ -141,7 +168,7 @@ function checkWin() {
         console.log("test");
         winCount++;
         document.getElementById("winCount").textContent = "Siege: " + winCount;
-        resetALL();
+        return true;
     }
 }
 
@@ -150,9 +177,6 @@ function resetALL() {
     firstCard = null;
     secondCard = null;
     boardLocked = false;
-    buildBoard(2);
+    buildBoard(SIZE);
 }
 
-
-const defaultSize = parseInt(document.getElementById("sizeSelect").value);
-buildBoard(defaultSize);
