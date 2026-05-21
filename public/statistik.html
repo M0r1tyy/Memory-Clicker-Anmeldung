@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Memory – Statistik</title>
+</head>
+
+<body>
+
+  <h1>Memory Statistik</h1>
+  <button onclick="alleLoeschen()">Alle Daten löschen</button>
+  <hr>
+
+  <div id="zusammenfassung"></div>
+  <hr>
+  <div id="spielliste"></div>
+
+  <script>
+
+    const data = JSON.parse(localStorage.getItem("memoryStats") || "[]"); // localStorage lesen
+
+    // ZUSAMMENFASSUNG 
+    function zeigeZusammenfassung() {
+      const container = document.getElementById("zusammenfassung"); // div 1
+
+      // Wenn keine Daten vorhanden
+      if (data.length === 0) {
+        container.innerHTML = "<p>Noch keine Spiele gespeichert.</p>";
+        return;
+      }
+
+      // Infos 
+      const anzahlSpiele = data.length;
+      const p1Siege = data.filter(g => g.winner === "Spieler 1").length;
+      const p2Siege = data.filter(g => g.winner === "Spieler 2").length;
+      const unentschieden = data.filter(g => g.winner === "Unentschieden").length;
+      const summeZuege = data.reduce((s, g) => s + g.totalAttempts, 0);
+      const durchschnitt = (summeZuege / anzahlSpiele).toFixed(1);
+      const alleZuege = data.flatMap(g => g.zuege); // zu einem Array machen 
+      const treffer = alleZuege.filter(z => z.match).length;
+      const trefferquote = ((treffer / alleZuege.length) * 100).toFixed(1);
+
+      // Infos anzeigen
+      container.innerHTML = `
+        <h2>Gesamtübersicht</h2>
+        <p>Gespielte Runden: <strong>${anzahlSpiele}</strong></p>
+        <p>Spieler 1 Siege: <strong>${p1Siege}</strong></p>
+        <p>Spieler 2 Siege: <strong>${p2Siege}</strong></p>
+        <p>Unentschieden: <strong>${unentschieden}</strong></p>
+        <p>Ø Züge pro Spiel: <strong>${durchschnitt}</strong></p>
+        <p>Trefferquote: <strong>${trefferquote}%</strong></p>
+      `;
+    }
+
+    // TABELLE 
+    function zeigeSpiele() {
+      const container = document.getElementById("spielliste"); // div 2
+      container.innerHTML = "<h2>Alle Spiele</h2>";
+
+      if (data.length === 0) return;
+
+      // Neueste Spiele zuerst
+      [...data].reverse().forEach((spiel, i) => {
+        const nummer = data.length - i;
+        const datum = new Date(spiel.timestamp).toLocaleString("de-DE");
+        const trefferAnzahl = spiel.zuege.filter(z => z.match).length;
+        const fehlerAnzahl = spiel.zuege.filter(z => !z.match).length;
+
+        // Spiel-Header
+        const header = document.createElement("h3");
+        header.textContent =
+          `Spiel #${nummer} — ${datum} — Gewinner: ${spiel.winner} ` +
+          `(${spiel.players[0].pairs} : ${spiel.players[1].pairs} Paare, ` +
+          `${spiel.totalAttempts} Züge, Board: ${spiel.boardSize} Karten)`;
+        container.appendChild(header);
+
+        // Zugtabelle
+        const tabelle = document.createElement("table");
+        tabelle.border = "1";
+        tabelle.innerHTML = `
+          <thead>
+            <tr>
+              <th>Zug</th>
+              <th>Spieler</th>
+              <th>Karte 1</th>
+              <th>Karte 2</th>
+              <th>Ergebnis</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-${nummer}"></tbody>
+        `;
+        container.appendChild(tabelle);
+
+        const tbody = document.getElementById(`tbody-${nummer}`);
+        spiel.zuege.forEach((zug, j) => {
+          const zeile = document.createElement("tr");
+
+          zeile.style.background = zug.bewertung;
+
+          zeile.innerHTML = `
+            <td>${j + 1}</td>
+            <td>Spieler ${zug.spieler}</td>
+            <td>${zug.symbol1} (ID: ${zug.id1})</td>
+            <td>${zug.symbol2} (ID: ${zug.id2})</td>
+            <td>${zug.match ? "✓ Treffer" : "✗ Fehler"}</td>
+          `;
+          tbody.appendChild(zeile);
+        });
+        
+        // Treffer & Fehler
+        const info = document.createElement("p");
+        info.textContent = `Treffer: ${trefferAnzahl} | Fehler: ${fehlerAnzahl}`;
+        container.appendChild(info);
+        // Streaks
+        const trefferStreak = berechneStreak(spiel.zuege, true);
+        const fehlerStreak = berechneStreak(spiel.zuege, false);
+
+        const streak = document.createElement("p");
+        streak.textContent =
+          `Längste Treffer-Streak: ${trefferStreak} | ` +
+          `Längste Fehler-Streak: ${fehlerStreak}`;
+        container.appendChild(streak);
+        // Trennlinie
+        container.appendChild(document.createElement("hr"));
+      });
+    }
+
+    // LÖSCHEN 
+    function alleLoeschen() {
+      if (confirm("Wirklich alle Daten löschen?")) {
+        localStorage.removeItem("memoryStats");
+        location.reload();
+      }
+    }
+
+    function berechneStreak(zuege, typ) {
+      let aktuell = 0;
+      let max = 0;
+
+      zuege.forEach(zug => {
+        if (zug.match === typ) {
+          aktuell++;
+          if (aktuell > max) max = aktuell;
+        } else {
+          aktuell = 0;
+        }
+      });
+      return max;
+    }
+
+    // START 
+    zeigeZusammenfassung();
+    zeigeSpiele();
+
+  </script>
+
+<head>
+    <link rel="stylesheet" href="http://localhost:8000/style/panel.css">
+</head>
+<button id="nav-toggle" onclick="toggleNav()">☰</button>
+ 
+
+<div id="nav-panel">
+  <h3>Navigation</h3>
+  <a href="http://localhost:8000/public/inhaltsverzeichniss.php">🏠 Startseite</a>
+  <a href="http://localhost:8000/public/memory.html">🃏 Memory</a>
+  <a href="http://localhost:8000/public/statistik.html">📊 Statistik</a>
+</div>
+ 
+<script>
+  function toggleNav() {
+    const panel = document.getElementById("nav-panel");
+    panel.classList.toggle("open");
+  }
+ 
+  // aktive seite markieren
+  const links = document.querySelectorAll("#nav-panel a");
+  links.forEach(link => {
+    if (link.href === window.location.href) {
+      link.classList.add("aktiv");
+    }
+  });
+ 
+  // klick außerhalb schließt panel
+  document.addEventListener("click", function(e) {
+    const panel  = document.getElementById("nav-panel");
+    const toggle = document.getElementById("nav-toggle");
+    if (!panel.contains(e.target) && !toggle.contains(e.target)) {
+      panel.classList.remove("open");
+    }
+  });
+</script>
+
+
+
+</body>
+
+</html>

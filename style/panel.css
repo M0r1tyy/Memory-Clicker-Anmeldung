@@ -1,0 +1,69 @@
+ /* TOGGLE BUTTON */
+  #nav-toggle {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #333;
+    color: white;
+    border: none;
+    padding: 12px 6px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 6px 0 0 6px;
+    z-index: 1000;
+    writing-mode: vertical-rl;
+    letter-spacing: 2px;
+  }
+ 
+  /* PANEL */
+  #nav-panel {
+    position: fixed;
+    right: -200px;         /* versteckt außerhalb des Bildschirms */
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background: #222;
+    color: white;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    transition: right 0.3s ease;  /* ausfahren animation */
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+ 
+  /* wenn offen: panel fährt rein */
+  #nav-panel.open {
+    right: 0;
+  }
+ 
+  #nav-panel h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+  }
+ 
+  #nav-panel a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.15s;
+  }
+ 
+  #nav-panel a:hover {
+    background: #444;
+  }
+ 
+  /* aktive Seite hervorheben */
+  #nav-panel a.aktiv {
+    background: #555;
+    font-weight: bold;
+  }

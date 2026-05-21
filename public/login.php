@@ -1,7 +1,12 @@
 <?php
-$lifetime = 60;
-session_set_cookie_params($lifetime);
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    
+    $lifetime = 60;
+    session_set_cookie_params($lifetime);
+}
+
+
 
 // if user loggedIn redirect 
 if (
@@ -30,8 +35,7 @@ if (
             <br><br>
             <input name="passwort" id="passwort" type="password" placeholder="Passwort">
             <br><br>
-            <input type="submit" value="Bestätigen" />
-            <!-- <button type="submit">Bestätigen</button> -->
+            <input type="submit" value="Bestätigen"/>
         </form>
     </div>
 

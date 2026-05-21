@@ -1,33 +1,78 @@
 <html>
-    <head>
+<head>
     <link rel="stylesheet" href="http://localhost:8000/style/memory.css">
-
 </head>
 <body>
 
-<h1>Memory Spiel</h1>
-<p>Wähle die Anzahl der Karten aus</p>
-<p>Versuche: <span id="attempts">0</span></p>
-<p id="winCount">Siege: 0</p>
+<div id="top">
+    <div id="title-block">
+        <h1>Memory Spiel</h1>
+        <p>Wähle die Anzahl der Karten aus</p>
+        <select id="sizeSelect" onchange="selectSize(event)">
+            <option value="2">2 Karten</option>
+            <option value="8">8 Karten</option>
+            <option value="18">18 Karten</option>
+            <option value="32">32 Karten</option>
+            <option value="50">50 Karten</option>
+            <option value="72">72 Karten</option>
+            <option value="98">98 Karten</option>
+        </select>
+        <span id="attempts" style="display:none"></span>
+        <span id="winCount" style="display:none"></span>
+    </div>
 
-
-<select id="sizeSelect" onchange="selectSize(event)">
-    <option value="2">2 Karten</option>
-    <option value="8">8 Karten</option>
-    <option value="18">18 Karten</option>
-    <option value="32">32 Karten</option>
-    <option value="50">50 Karten</option>
-    <option value="72">72 Karten</option>
-    <option value="98">98 Karten</option>
-</select>
-<br><br>
+    <div id="player-info">
+        <p id="currentPlayer">Spieler 1 ist dran</p>
+        <span id="p1pairs" style="display:none"></span>
+        <span id="p2pairs" style="display:none"></span>
+    </div>
+</div>
+<br>
 <div id="board"></div>
 
 <dialog id="winDialog">
     <h2>Gewonnen!!</h2>
-
+    <p id="dialogResult"></p>
     <button id="closeDialog" onclick="onDialogCloseBtn(this)">Continue</button>
 </dialog>
+
+<head>
+    <link rel="stylesheet" href="http://localhost:8000/style/panel.css">
+</head>
+<button id="nav-toggle" onclick="toggleNav()">☰</button>
+ 
+
+<div id="nav-panel">
+  <h3>Navigation</h3>
+  <a href="http://localhost:8000/public/inhaltsverzeichniss.php">🏠 Startseite</a>
+  <a href="http://localhost:8000/public/memory.html">🃏 Memory</a>
+  <a href="http://localhost:8000/public/statistik.html">📊 Statistik</a>
+</div>
+ 
+<script>
+  function toggleNav() {
+    const panel = document.getElementById("nav-panel");
+    panel.classList.toggle("open");
+  }
+ 
+  // aktive seite markieren
+  const links = document.querySelectorAll("#nav-panel a");
+  links.forEach(link => {
+    if (link.href === window.location.href) {
+      link.classList.add("aktiv");
+    }
+  });
+ 
+  // klick außerhalb schließt panel
+  document.addEventListener("click", function(e) {
+    const panel  = document.getElementById("nav-panel");
+    const toggle = document.getElementById("nav-toggle");
+    if (!panel.contains(e.target) && !toggle.contains(e.target)) {
+      panel.classList.remove("open");
+    }
+  });
+</script>
+
 
 <script src="http://localhost:8000/js/memory.js"></script>
 </body>
