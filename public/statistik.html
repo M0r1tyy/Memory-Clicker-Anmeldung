@@ -103,8 +103,10 @@
             <td>Spieler ${zug.spieler}</td>
             <td>${zug.symbol1} (ID: ${zug.id1})</td>
             <td>${zug.symbol2} (ID: ${zug.id2})</td>
-            <td>${zug.match ? "✓ Treffer" : "✗ Fehler"}</td>
+            <td style=" background: ${zug.match ? 'lightgreen ' : 'lightcoral'}; ">${zug.match ? "✓ Treffer" : "✗ Fehler"}</td>`;
           `;
+            zeile.querySelectorAll("td:not(:last-child)").forEach(td => td.style.background = zug.bewertung);
+          
           tbody.appendChild(zeile);
         });
         
