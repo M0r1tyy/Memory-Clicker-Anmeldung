@@ -1,3 +1,7 @@
+body {
+    height: 100vh;
+    overflow: hidden; 
+}
 #board {
     display: grid;
     justify-content: center;

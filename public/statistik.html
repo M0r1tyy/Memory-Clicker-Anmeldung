@@ -17,9 +17,9 @@
   <div id="spielliste"></div>
 
   <script>
-
+    console.log("test");
     const data = JSON.parse(localStorage.getItem("memoryStats") || "[]"); // localStorage lesen
-
+    console.log(data);
     // ZUSAMMENFASSUNG 
     function zeigeZusammenfassung() {
       const container = document.getElementById("zusammenfassung"); // div 1
@@ -103,8 +103,8 @@
             <td>Spieler ${zug.spieler}</td>
             <td>${zug.symbol1} (ID: ${zug.id1})</td>
             <td>${zug.symbol2} (ID: ${zug.id2})</td>
-            <td style=" background: ${zug.match ? 'lightgreen ' : 'lightcoral'}; ">${zug.match ? "✓ Treffer" : "✗ Fehler"}</td>`;
-          `;
+            <td style=" background: ${zug.match ? 'lightgreen ' : 'lightcoral'}; ">${zug.match ? "✓ Treffer" : "✗ Fehler"}</td>
+            `;
             zeile.querySelectorAll("td:not(:last-child)").forEach(td => td.style.background = zug.bewertung);
           
           tbody.appendChild(zeile);
@@ -112,7 +112,7 @@
         
         // Treffer & Fehler
         const info = document.createElement("p");
-        info.textContent = `Treffer: ${trefferAnzahl} | Fehler: ${fehlerAnzahl}`;
+        info.textContent = "Treffer: " + trefferAnzahl + "| Fehler: " + fehlerAnzahl;
         container.appendChild(info);
         // Streaks
         const trefferStreak = berechneStreak(spiel.zuege, true);
@@ -120,8 +120,8 @@
 
         const streak = document.createElement("p");
         streak.textContent =
-          `Längste Treffer-Streak: ${trefferStreak} | ` +
-          `Längste Fehler-Streak: ${fehlerStreak}`;
+           `Längste Treffer-Streak: ${trefferStreak} | ` +
+           `Längste Fehler-Streak: ${fehlerStreak}`;
         container.appendChild(streak);
         // Trennlinie
         container.appendChild(document.createElement("hr"));
