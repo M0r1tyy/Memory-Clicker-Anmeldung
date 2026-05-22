@@ -78,14 +78,13 @@ function buildBoard(size) {
     document.getElementById("attempts").textContent = attempts;
 
     let columns;
-
+    // board size
     if (size <= 4) columns = 2;
     else if (size <= 8) columns = 4;
     else if (size <= 18) columns = 6;
     else if (size <= 32) columns = 8;
     else if (size <= 50) columns = 10;
     else if (size <= 72) columns = 12;
-    else if (size <= 98) columns = 14;
     else columns = 4;
 
     board.style.gridTemplateColumns = `repeat(${columns}, 100px)`;
